@@ -41,7 +41,7 @@ private slots:
     void on_actionStart_triggered();
     void on_actionExit_triggered();
 
-   // void startGame();
+    void startGame();
 
 private:
     Ui::MainWindow *ui;
@@ -50,8 +50,8 @@ private:
     Field *enemyFieldImage;
     Board *board;
     State state;
-    Choose* chooseDialog;
-
+    Choose *chooseDialog;
+//    int count =  enemyFieldImage->sunkShip();
 };
 
 #endif // MAIN_WINDOW_H

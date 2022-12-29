@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPainter>
 #include <QRandomGenerator>
@@ -6,16 +6,16 @@
 
 const int N = 10;
 
-//void MainWindow::startGame()
-//{
-////    myFieldImage->createBoard();
-////    myFieldImage->redraw();
-////    enemyFieldImage->createBoard();
-////    enemyFieldImage->redraw();
+void MainWindow::startGame()
+{
+    myFieldImage->createBoard();
+    myFieldImage->redraw();
+    enemyFieldImage->createBoard();
+    enemyFieldImage->redraw();
 
 
-//    qDebug()<<"startGame";
-//}
+    qDebug()<<"startGame";
+}
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -23,24 +23,22 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     pictures = new Images();
     pictures->load();
 
-    myFieldImage = new Field(pictures,40,39,216,217);
-    enemyFieldImage = new Field(pictures,322,39,214,217);
-    enemyFieldImage->isEnemy = true;
-   // chooseDialog = new Choose(this);
+   myFieldImage = new Field(pictures,40,39,216,217);
+   enemyFieldImage = new Field(pictures,322,39,214,217);
+   enemyFieldImage->isEnemy = true;
+   chooseDialog = new Choose(this);
 
+   //board->init();
+   //board->drawShips();
 
-    board->drawShips();
 
     myFieldImage->redraw();
     enemyFieldImage->redraw();
 
+    connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
+    connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
 
-
-
-//    connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
-//    connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
-
-  // startGame();
+    startGame();
 }
 
 MainWindow::~MainWindow()
@@ -62,7 +60,6 @@ void MainWindow::mousePressEvent( QMouseEvent *ev)
     QPoint pos = ev->pos();
     pos.setY(pos.y()-this->menuBar()->geometry().height());
 
-
     if(state == ST_MAKING_STEP )
     {
 
@@ -74,78 +71,93 @@ void MainWindow::mousePressEvent( QMouseEvent *ev)
 
         bool turn = 1;
 
+
+//        while()
+//        {
+
+//        }
+
         if(turn == 1)
         {
             if(enemyFieldImage->shot(point.x(),point.y()) == 1)
             {
+
+                board->draw(point.x(),point.y(), 4);
+
                 enemyFieldImage->setCell(point.x(),point.y(),CL_READFULL);
-                int count =  enemyFieldImage->sunkShip();
+                qDebug()<<"Попали";
 
-                if(count==20)
+
+                if(board->table[point.x()][point.y()] == 1)
                 {
-                    qDebug()<<"Human wins";
-                    chooseDialog->show();
+                    board->table[point.x()][point.y()] = 4;
+                    enemyFieldImage->setCell(point.x(),point.y(),CL_READFULL);
+                    qDebug()<<"Попали";
+                    board->init();
                 }
-
+                else
+                {
+                    board->draw(point.x(), point.y(),3);
+                    enemyFieldImage->setCell(point.x(),point.y(),CL_DOT);
+                    qDebug()<<"Промах";
+                    turn = 0;
+                }
             }
+
             else
             {
+                board->draw(point.x(), point.y(),3);
                 enemyFieldImage->setCell(point.x(),point.y(),CL_DOT);
+                qDebug()<<"Промах";
                 turn = 0;
             }
-
-
             enemyFieldImage->redraw();
             this->update();
 
         }
+      // }
 
-        if (turn == 0)
+        if(turn == 0)
         {
-            qDebug()<< "Хiд комп'ютера: ";
-
 
             int xBot = QRandomGenerator::global()->generate() % N;
             int yBot =  QRandomGenerator::global()->generate() % N;
 
-
-            qDebug()<<xBot;
-            qDebug()<<yBot;
-
-
-            if(myFieldImage->shot(xBot, yBot))
+            if(myFieldImage->shot(xBot, yBot) == 1)
             {
+                board->draw(xBot, yBot, 4);
+
                 myFieldImage->setCell(xBot,yBot,CL_READFULL);
 
-                if(myFieldImage->shot(xBot, yBot) == 1 )
+
+
+                if(board->table[xBot][yBot] == 1)
                 {
+                    board->table[xBot][yBot] = 2;
+                    myFieldImage->setCell(point.x(),point.y(),CL_READFULL);
+                }
+                else
+                {
+                    board->draw(xBot, yBot,3);
+                    myFieldImage->setCell(xBot,yBot,CL_DOT);
 
-                    if(myFieldImage->shot(xBot, yBot) == 1)
-                    {
-                        myFieldImage->setCell(xBot,yBot,CL_READFULL);
-                        int count =  myFieldImage->sunkShip();
-                        if(count==20)
-                        {
-                            qDebug()<<"Bot wins";
-                            chooseDialog->show();
-                        }
-                    }
-
-                    else
-                    {
-                        myFieldImage->setCell(xBot,yBot,CL_DOT);
-                    }
                 }
             }
 
             else
             {
+                board->draw(xBot, yBot,3);
                 myFieldImage->setCell(xBot,yBot,CL_DOT);
             }
-            myFieldImage ->redraw();
+
+            myFieldImage->redraw();
+            this->update();
         }
     }
+
 }
+
+
 
 void MainWindow::on_actionStart_triggered()
 {

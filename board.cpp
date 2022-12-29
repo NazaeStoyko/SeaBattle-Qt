@@ -43,10 +43,10 @@ void Board::removeCoordinate(size_t index)
 }
 
 
-short Board::drawShip(short shipLenght)
+short int  Board::drawShip(short shipLenght)
 {
     bool finish = false;
-    Coordinate coordinates = Coordinate(0, 0, 0);
+    Coordinate coordinates = Coordinate(0,0,0);
     QVector<Coordinate> cloned = this->empty;
 
     while (finish == false)
@@ -80,6 +80,7 @@ short Board::drawShip(short shipLenght)
     borderShip(shipLenght, coordinates);
     return true;
 }
+
 
 void Board::borderShip(short shipLenght, Coordinate coordinates) {
 

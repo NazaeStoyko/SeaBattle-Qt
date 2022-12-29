@@ -25,7 +25,7 @@ QString Player::getNick()
     return nick;
 }
 
-void Player::setAge( int age)
+void Player::setAge(int age)
 {
     this->age = age;
 

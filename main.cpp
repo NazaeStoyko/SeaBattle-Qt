@@ -1,3 +1,7 @@
+
+#ifndef MAIN
+#define MAIN
+
 #include "mainwindow.h"
 #include "form.h"
 #include <QApplication>
@@ -16,7 +20,7 @@ int main( int argc, char* argv[] )
     return a.exec();
 }
 
-
+#endif
 
 
 

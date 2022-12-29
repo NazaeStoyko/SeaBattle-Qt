@@ -91,18 +91,16 @@ void Field::redraw()
 bool Field ::shot(int x , int y)
 {
     QPainter painter(image);
+
     return board->table[x][y]== 1;
-
-
 }
+
 
 int Field ::sunkShip()
 {
-    sunkShips +=1;
-    return sunkShips;
+sunkShips +=1;
+return sunkShips;
 }
-
-
 
 Cell Field ::getCell(int x , int y)
 {

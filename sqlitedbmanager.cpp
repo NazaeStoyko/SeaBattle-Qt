@@ -121,6 +121,7 @@ bool SqliteDBManager::inserIntoTable(Player& player)
     query.prepare("INSERT INTO players (nick, age) VALUES (:Nickname, :Age);");
     query.bindValue(":Nickname",     player.getNick()  );
     query.bindValue(":Age",         player.getAge());
+
     if(!query.exec()){
 
         qDebug() << query.lastError().text();
