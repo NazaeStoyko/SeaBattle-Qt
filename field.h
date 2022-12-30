@@ -36,10 +36,9 @@ public:
     int getY();
     Board *board;
      bool isEnemy;
-    bool shot(int x , int y);
+    bool isHit(int x , int y);
     int sunkShips = 0;
-    bool checkShip = false;
-    int sunkShip();
+   // bool checkShip = false;
     void createBoard();
 
 

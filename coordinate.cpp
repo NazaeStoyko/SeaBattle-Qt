@@ -1,6 +1,6 @@
 #include "coordinate.h"
 
-Coordinate::Coordinate(short int row, short int column, size_t index)
+Coordinate::Coordinate(short int row, short int column, int index)
 {
     this->row = row;
     this->column = column;

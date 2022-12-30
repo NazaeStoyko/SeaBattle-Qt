@@ -7,8 +7,7 @@ void Field::createBoard()
 
     board->init();
     board->drawShips();
-    // board->table[5][5]=1;
-    sunkShips = 0;
+
 }
 
 Field::Field(Images* images , int lft , int tp , int wdth,int hgh):
@@ -88,19 +87,19 @@ void Field::redraw()
 
 }
 
-bool Field ::shot(int x , int y)
+bool Field::isHit(int x , int y)
 {
     QPainter painter(image);
 
-    return board->table[x][y]== 1;
+    return (board->table[x][y] == 1);
 }
 
 
-int Field ::sunkShip()
-{
-sunkShips +=1;
-return sunkShips;
-}
+//int Field ::sunkShip()
+//{
+//sunkShips +=1;
+//return sunkShips;
+//}
 
 Cell Field ::getCell(int x , int y)
 {
@@ -118,10 +117,12 @@ void Field::setCell(int x,int y,Cell cell)
 
     if(n>=0 && n<field.size())
     {
-        playground[n] = field[n];
-        if(/*field[n]*/playground[n] == CL_CLEAR)
+        if(field[n] == CL_CLEAR) {
             playground[n] = cell;
-        field[n]=cell;
+        }
+        else {
+            playground[n] = field[n];
+        }
         return;
     }
     qDebug()<<"Error: no such cell";

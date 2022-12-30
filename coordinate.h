@@ -7,8 +7,8 @@ class Coordinate
 public:
     int row;
     int column;
-    size_t index;
-    Coordinate(short int row, short int column, size_t index);
+    int index;
+    Coordinate(short int row, short int column, int index);
 
 };
 

@@ -51,7 +51,6 @@ private:
     Board *board;
     State state;
     Choose *chooseDialog;
-//    int count =  enemyFieldImage->sunkShip();
 };
 
 #endif // MAIN_WINDOW_H

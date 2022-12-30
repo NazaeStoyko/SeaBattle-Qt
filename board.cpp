@@ -12,7 +12,7 @@ void Board::init()
     {
         for (short int column = 0; column < LENGHT; column++)
         {
-            this->draw(row, column, 0);
+            this->draw(row, column, CellStatus::Empty);
 
             this->empty.push_back(Coordinate(row, column, index));
             index += 1;
@@ -21,9 +21,9 @@ void Board::init()
 
 }
 
-void Board::draw(short row, short column, short value)
+void Board::draw(short row, short column, CellStatus cellStatus)
 {
-    this->table[row][column] = value;
+    this->table[row][column] = cellStatus;
 }
 
 Coordinate Board::getEmptyCoordinate(QVector<Coordinate> vec)
@@ -86,45 +86,45 @@ void Board::borderShip(short shipLenght, Coordinate coordinates) {
 
     for (size_t index = 0; index < shipLenght; index++)
     {
-        draw(coordinates.row + index, coordinates.column , 1);
+        draw(coordinates.row + index, coordinates.column , CellStatus::Ship);
 
         if (coordinates.column > 0)
         {
-            draw(coordinates.row + index, coordinates.column -1, 2);
+            draw(coordinates.row + index, coordinates.column -1, CellStatus::ShipBorder);
         }
 
         if (coordinates.column < 9)
         {
-            draw(coordinates.row + index, coordinates.column +1, 2);
+            draw(coordinates.row + index, coordinates.column +1, CellStatus::ShipBorder);
         }
     }
 
     if (coordinates.row + shipLenght < LENGHT)
     {
-        draw(coordinates.row + shipLenght, coordinates.column , 2);
+        draw(coordinates.row + shipLenght, coordinates.column , CellStatus::ShipBorder);
 
         if (coordinates.column > 0)
         {
-            draw(coordinates.row + shipLenght, coordinates.column - 1, 2);
+            draw(coordinates.row + shipLenght, coordinates.column - 1, CellStatus::ShipBorder);
         }
         if (coordinates.column < 9)
         {
-            draw(coordinates.row + shipLenght, coordinates.column + 1 ,2);
+            draw(coordinates.row + shipLenght, coordinates.column + 1 , CellStatus::ShipBorder);
         }
     }
 
 
     if (coordinates.row > 0)
     {
-        draw(coordinates.row - 1, coordinates.column , 2);
+        draw(coordinates.row - 1, coordinates.column , CellStatus::ShipBorder);
 
         if (coordinates.column > 0)
         {
-            draw(coordinates.row - 1, coordinates.column - 1, 2);
+            draw(coordinates.row - 1, coordinates.column - 1, CellStatus::ShipBorder);
         }
         if (coordinates.column < 9)
         {
-            draw(coordinates.row - 1, coordinates.column + 1, 2);
+            draw(coordinates.row - 1, coordinates.column + 1, CellStatus::ShipBorder);
         }
     }
 

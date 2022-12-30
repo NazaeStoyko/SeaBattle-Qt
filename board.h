@@ -7,6 +7,13 @@
 
 const int LENGHT = 10;
 
+enum CellStatus{
+    Empty,
+    Ship,
+    ShipBorder,
+    ShipHitted
+};
+
 class Board
 {
 
@@ -15,7 +22,7 @@ public:
     QVector<Coordinate> empty{};
     int index = 0;
 
-    void draw(short int row, short int column, short int value);
+    void draw(short int row, short int column, CellStatus cellStatus);
     void init();
     Coordinate getEmptyCoordinate(QVector<Coordinate> vec);
     void removeCoordinate(size_t index);

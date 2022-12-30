@@ -23,22 +23,21 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     pictures = new Images();
     pictures->load();
 
-   myFieldImage = new Field(pictures,40,39,216,217);
-   enemyFieldImage = new Field(pictures,322,39,214,217);
-   enemyFieldImage->isEnemy = true;
-   chooseDialog = new Choose(this);
-
-   //board->init();
-   //board->drawShips();
+    myFieldImage = new Field(pictures,40,39,216,217);
+    enemyFieldImage = new Field(pictures,322,39,214,217);
+    enemyFieldImage->isEnemy = true;
+    chooseDialog = new Choose(this);
 
 
+    myFieldImage->createBoard();
     myFieldImage->redraw();
+    enemyFieldImage->createBoard();
     enemyFieldImage->redraw();
 
     connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
     connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
 
-    startGame();
+    //    startGame();
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +56,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
 void MainWindow::mousePressEvent( QMouseEvent *ev)
 {
+
     QPoint pos = ev->pos();
     pos.setY(pos.y()-this->menuBar()->geometry().height());
 
@@ -67,78 +67,71 @@ void MainWindow::mousePressEvent( QMouseEvent *ev)
 
         QPoint point = enemyFieldImage->getCoord(pos.x(), pos.y());
         if(point.x()==-1)return;
-        qDebug()<<"Ship at "<<point.x()<<point.y();
+        qDebug()<<"Ship at " << point.x() << point.y();
 
-        bool turn = 1;
+//        bool turn = 1;
 
-
-//        while()
+//        if(turn == 1)
 //        {
-
-//        }
-
-        if(turn == 1)
-        {
-            if(enemyFieldImage->shot(point.x(),point.y()) == 1)
+            if(enemyFieldImage->isHit(point.x(),point.y()))
             {
 
-                board->draw(point.x(),point.y(), 4);
+                board->draw(point.x(),point.y(), CellStatus::ShipHitted);
 
                 enemyFieldImage->setCell(point.x(),point.y(),CL_READFULL);
                 qDebug()<<"Попали";
 
 
-                if(board->table[point.x()][point.y()] == 1)
+                if(board->table[point.x()][point.y()])
                 {
-                    board->table[point.x()][point.y()] = 4;
+                    board->table[point.x()][point.y()] =CellStatus::ShipHitted;
                     enemyFieldImage->setCell(point.x(),point.y(),CL_READFULL);
                     qDebug()<<"Попали";
                     board->init();
                 }
                 else
                 {
-                    board->draw(point.x(), point.y(),3);
+                    board->draw(point.x(), point.y(),CellStatus::Empty);
                     enemyFieldImage->setCell(point.x(),point.y(),CL_DOT);
                     qDebug()<<"Промах";
-                    turn = 0;
+//                    turn = 0;
                 }
             }
 
             else
             {
-                board->draw(point.x(), point.y(),3);
+               board->draw(point.x(), point.y(),CellStatus::Empty);
                 enemyFieldImage->setCell(point.x(),point.y(),CL_DOT);
                 qDebug()<<"Промах";
-                turn = 0;
+//                turn = 0;
             }
             enemyFieldImage->redraw();
             this->update();
 
-        }
-      // }
+//        }
 
-        if(turn == 0)
-        {
+
+//        if(turn == 0)
+//        {
 
             int xBot = QRandomGenerator::global()->generate() % N;
             int yBot =  QRandomGenerator::global()->generate() % N;
 
-            if(myFieldImage->shot(xBot, yBot) == 1)
+            if(myFieldImage->isHit(xBot, yBot))
             {
-                board->draw(xBot, yBot, 4);
 
                 myFieldImage->setCell(xBot,yBot,CL_READFULL);
+                board->draw(point.x(),point.y(), CellStatus::ShipHitted);
 
 
-
-                if(board->table[xBot][yBot] == 1)
+                if(board->table[xBot][yBot] == CellStatus::Ship)
                 {
-                    board->table[xBot][yBot] = 2;
+                    board->table[xBot][yBot] = CellStatus::ShipHitted;
                     myFieldImage->setCell(point.x(),point.y(),CL_READFULL);
                 }
                 else
                 {
-                    board->draw(xBot, yBot,3);
+                    board->draw(xBot, yBot,CellStatus::Empty);
                     myFieldImage->setCell(xBot,yBot,CL_DOT);
 
                 }
@@ -146,14 +139,14 @@ void MainWindow::mousePressEvent( QMouseEvent *ev)
 
             else
             {
-                board->draw(xBot, yBot,3);
+                board->draw(xBot, yBot,CellStatus::Empty);
                 myFieldImage->setCell(xBot,yBot,CL_DOT);
             }
 
             myFieldImage->redraw();
             this->update();
         }
-    }
+//    }
 
 }
 
