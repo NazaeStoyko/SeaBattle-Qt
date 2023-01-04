@@ -11,7 +11,8 @@ enum CellStatus{
     Empty,
     Ship,
     ShipBorder,
-    ShipHitted
+    ShipHitted,
+    Dot
 };
 
 class Board

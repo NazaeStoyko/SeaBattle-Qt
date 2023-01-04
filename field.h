@@ -6,7 +6,6 @@
 #include <QPoint>
 #include "images.h"
 #include "board.h"
-#include "coordinate.h"
 #include <QRandomGenerator>
 
 enum Cell
@@ -35,10 +34,9 @@ public:
     int getX();
     int getY();
     Board *board;
-     bool isEnemy;
+    bool isEnemy;
     bool isHit(int x , int y);
     int sunkShips = 0;
-   // bool checkShip = false;
     void createBoard();
 
 

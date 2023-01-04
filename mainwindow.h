@@ -7,12 +7,14 @@
 #include <QPoint>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QVector>
 #include <QtNetwork/QTcpSocket>
+
 #include "images.h"
 #include "field.h"
 #include "board.h"
-#include "QVector"
 #include "choose.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class MainWindow; }
@@ -22,7 +24,7 @@ QT_END_NAMESPACE
 enum State
 {
     ST_PLACING_SHIPS,
-    ST_WAITING_SHIPS,
+    ST_BOT_STEP,
     ST_MAKING_STEP
 };
 
@@ -33,6 +35,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *ev);
@@ -51,6 +54,10 @@ private:
     Board *board;
     State state;
     Choose *chooseDialog;
+    short int botShipsCount;
+    short int humenShipsCount;
+
+
 };
 
 #endif // MAIN_WINDOW_H

@@ -56,7 +56,6 @@ void Field::redraw()
                 painter.drawImage(i*cfx,j*cfy,pictures->get("full"));
             }
 
-
             switch (getCell(i,j))
             {
             case CL_DOT:
@@ -89,9 +88,8 @@ void Field::redraw()
 
 bool Field::isHit(int x , int y)
 {
-    QPainter painter(image);
-
-    return (board->table[x][y] == 1);
+    //QPainter painter(image);
+    return (board->table[x][y] == CellStatus::Ship);
 }
 
 
