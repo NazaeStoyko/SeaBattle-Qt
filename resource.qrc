@@ -7,5 +7,6 @@
         <file>img/half.png</file>
         <file>img/redfull.png</file>
         <file>img/redhalf.png</file>
+        <file>img/download.jpg</file>
     </qresource>
 </RCC>
