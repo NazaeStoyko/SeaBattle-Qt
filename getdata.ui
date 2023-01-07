@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>C:/Users/User/Pictures/download.jpg</normaloff>C:/Users/User/Pictures/download.jpg</iconset>
+  </property>
   <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>

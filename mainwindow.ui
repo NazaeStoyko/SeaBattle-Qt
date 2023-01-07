@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>SeaBattle</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>C:/Users/User/Pictures/download.jpg</normaloff>C:/Users/User/Pictures/download.jpg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>330</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -18,14 +18,14 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
-    <height>400</height>
+    <width>330</width>
+    <height>370</height>
    </size>
   </property>
   <property name="sizeIncrement">
    <size>
     <width>600</width>
-    <height>400</height>
+    <height>370</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,17 +36,14 @@
     <normaloff>C:/Users/User/Pictures/download.jpg</normaloff>C:/Users/User/Pictures/download.jpg</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame
-{
- backraund:#333;
-}
+   <string notr="true">
 </string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>80</y>
+     <x>10</x>
+     <y>60</y>
      <width>311</width>
      <height>301</height>
     </rect>
@@ -54,6 +51,10 @@
    <property name="styleSheet">
     <string notr="true">QFrame{
 background: #333;
+border-radius: 15px;
+}
+#Form{
+background:url(:/download.jpg)
 }
 QPushButton 
 {
@@ -72,6 +73,7 @@ QLineEdit{
 background: transparent;
 border: none;
 color:#717072;
+border-bottom: 1px sold #717072;
 }
 </string>
    </property>
@@ -84,9 +86,9 @@ color:#717072;
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>100</y>
-      <width>257</width>
+      <x>30</x>
+      <y>90</y>
+      <width>251</width>
       <height>110</height>
      </rect>
     </property>
@@ -96,7 +98,7 @@ color:#717072;
        <item>
         <widget class="QLineEdit" name="Age">
          <property name="text">
-          <string>            Age</string>
+          <string>                          Age</string>
          </property>
         </widget>
        </item>
@@ -116,29 +118,14 @@ color:#717072;
        <item>
         <widget class="QLineEdit" name="Nick">
          <property name="text">
-          <string>        Nickname      </string>
+          <string>                     Nickname      </string>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>            Age</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>        Nickname      </string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <layout class="QVBoxLayout" name="verticalLayout_2"/>
      </item>
     </layout>
    </widget>
@@ -147,8 +134,8 @@ color:#717072;
      <rect>
       <x>100</x>
       <y>40</y>
-      <width>121</width>
-      <height>20</height>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -175,8 +162,8 @@ color:#717072;
   <widget class="QToolButton" name="toolButton">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>40</y>
+     <x>120</x>
+     <y>0</y>
      <width>81</width>
      <height>71</height>
     </rect>

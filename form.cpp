@@ -22,7 +22,7 @@ Form::~Form()
 
 void Form::on_pushButton_clicked()
 {
-    Player newPlayer(ui->lineEdit->text(), ui->lineEdit_2->text().toInt());
+    Player newPlayer(ui->Age->text(), ui->Nick->text().toInt());
     dbmanager->inserIntoTable(newPlayer);
     hide();
 }
