@@ -1,8 +1,5 @@
 #include "player.h"
 
-
-
-
 Player::Player(QString nick, int age, int id)
 {
     this->id = id;
@@ -30,6 +27,7 @@ void Player::setAge(int age)
     this->age = age;
 
 }
+
 int Player::getAge ()
 {
     return age;

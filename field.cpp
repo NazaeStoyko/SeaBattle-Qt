@@ -1,29 +1,23 @@
 #include "field.h"
-#include <QRandomGenerator>
-#include <board.h>
 
 void Field::createBoard()
 {
-
     board->init();
     board->drawShips();
-
 }
 
-Field::Field(Images* images , int lft , int tp , int wdth,int hgh):
-    pictures(images),left(lft), top(tp), width(wdth), height(hgh)
+Field::Field(Images* images , int left , int top , int width,int height):
+    pictures(images),left(left), top(top), width(width), height(height)
 {
     isEnemy = false;
 
-    field.fill(CL_CLEAR,100);
+    field.fill(CL_CLEAR, 100);
 
     playground.fill(CL_CLEAR, 100);
 
-    image = new QImage (width , height,QImage::Format_ARGB32);
+    image = new QImage (width, height, QImage::Format_ARGB32);
     board = new Board();
 }
-
-
 
 
 Field::~Field()
@@ -31,17 +25,16 @@ Field::~Field()
     delete image;
 }
 
+
 const QImage& Field::getImage()const
 {
     return *image;
 }
 
 
-
 void Field::redraw()
 {
     image->fill(0);
-
 
     QPainter painter(image);
     double cfx = 1.0*width/10.0;
@@ -79,11 +72,8 @@ void Field::redraw()
             default:
                 break;
             }
-
         }
-
     }
-
 }
 
 bool Field::isHit(int x , int y)

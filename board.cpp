@@ -1,7 +1,6 @@
 #include "board.h"
 #include <QPainter>
 #include <QRandomGenerator>
-#include "board.h"
 #include <QDebug>
 
 void Board::init()

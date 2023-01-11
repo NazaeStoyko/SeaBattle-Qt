@@ -5,12 +5,11 @@
 class Coordinate
 {
 public:
-    int row;
-    int column;
+    short int row;
+    short int column;
     int index;
+    Coordinate();
     Coordinate(short int row, short int column, int index);
-
 };
 
 #endif
-

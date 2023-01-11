@@ -8,7 +8,6 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QVector>
-#include <QtNetwork/QTcpSocket>
 
 #include "images.h"
 #include "field.h"
@@ -17,7 +16,9 @@
 
 
 QT_BEGIN_NAMESPACE
-namespace Ui {class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 
@@ -43,7 +44,6 @@ protected:
 private slots:
     void on_actionStart_triggered();
     void on_actionExit_triggered();
-
     void startGame();
 
 private:
@@ -56,8 +56,6 @@ private:
     Choose *chooseDialog;
     short int botShipsCount;
     short int humenShipsCount;
-
-
 };
 
 #endif // MAIN_WINDOW_H

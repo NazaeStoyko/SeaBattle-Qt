@@ -9,7 +9,6 @@ void Images::load()
     images.insert( "redhalf", QImage(":/resource/img/redhalf.png") );
     images.insert( "redfull", QImage(":/resource/img/redfull.png") );
     images.insert( "about", QImage(":/about.png") );
-
 }
 
 QImage& Images::get(const QString& imgName)

@@ -1,12 +1,14 @@
-#pragma once
+#ifndef FIELD_H
+#define FIELD_H
+
 #include <QVector>
 #include <QImage>
 #include <QDebug>
 #include <QPainter>
 #include <QPoint>
+#include <QRandomGenerator>
 #include "images.h"
 #include "board.h"
-#include <QRandomGenerator>
 
 enum Cell
 {
@@ -22,7 +24,7 @@ enum Cell
 class Field
 {
 public:
-    Field(Images * images , int lft,int tp,int wdth,int hght);
+    Field(Images *images, int left, int top, int width, int hight);
     ~Field();
 
     const QImage& getImage()const;
@@ -39,18 +41,16 @@ public:
     int sunkShips = 0;
     void createBoard();
 
-
 private:
     QImage *image;
-    Images * pictures;
+    Images *pictures;
     QVector<Cell> field;
     QVector<Cell> playground;
 
-    int left,top,width,height;
-
-
+    int left;
+    int top;
+    int width;
+    int height;
 };
 
-
-
-
+#endif //FIELD_H

@@ -4,10 +4,10 @@
 #include <QDialog>
 #include "getdata.h"
 
-
 namespace Ui {
 class Choose;
 }
+
 
 class Choose : public QDialog
 {

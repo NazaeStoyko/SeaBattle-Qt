@@ -1,8 +1,9 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "field.h"
+
 #include <QPainter>
 #include <QRandomGenerator>
-#include "field.h"
 
 #define FIELD_SIZE 10
 
@@ -48,7 +49,6 @@ MainWindow::~MainWindow()
 }
 
 
-
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -56,6 +56,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawImage(myFieldImage->getX(),this->menuBar()->geometry().height()+myFieldImage->getY(),myFieldImage->getImage());
     painter.drawImage(enemyFieldImage->getX(),this->menuBar()->geometry().height()+enemyFieldImage->getY(),enemyFieldImage->getImage());
 }
+
 
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
@@ -101,9 +102,6 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         enemyFieldImage->redraw();
 //        this->update();
     }
-
-
-
 
     while (state == ST_BOT_STEP)
     {
@@ -156,26 +154,3 @@ void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

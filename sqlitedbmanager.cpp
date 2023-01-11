@@ -1,5 +1,4 @@
 #include "sqlitedbmanager.h"
-#include <QObject>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QFile>

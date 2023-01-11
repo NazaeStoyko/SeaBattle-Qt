@@ -1,7 +1,6 @@
 #ifndef IMAGES_H
 #define IMAGES_H
 
-
 #include <QMap>
 #include <QImage>
 #include <QString>

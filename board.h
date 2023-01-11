@@ -1,9 +1,8 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "coordinate.h"
-#include <QVector>
-#include <QPainter>
 
+#include <QVector>
+#include "coordinate.h"
 
 const int LENGHT = 10;
 
@@ -14,6 +13,7 @@ enum CellStatus{
     ShipHitted,
     Dot
 };
+
 
 class Board
 {
@@ -32,34 +32,6 @@ public:
     void borderShip(short int shipLenght, Coordinate coordinates);
     void createShip(int lenght, int count);
     void drawShips();
-
-
 };
 
 #endif // BOARD_H
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

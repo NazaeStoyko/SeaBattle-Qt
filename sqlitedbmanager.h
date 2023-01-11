@@ -1,10 +1,8 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QSqlDatabase>
-#include <QVariantList>
+#include "dbmanager.h"
 #include "player.h"
-#include <dbmanager.h>
 
 /* Директиви імен таблиці, полів таблиці і бази даних */
 #define DATABASE_HOSTNAME   "ExampleDataBase"
@@ -44,7 +42,5 @@ private:
     void closeDataBase();
     bool createTables();
 };
-
-
 
 #endif // DATABASE_H
