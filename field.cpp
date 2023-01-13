@@ -6,11 +6,9 @@ void Field::createBoard()
     board->drawShips();
 }
 
-Field::Field(Images* images , int left , int top , int width,int height):
-    pictures(images),left(left), top(top), width(width), height(height)
+Field::Field(Images* images , int left , int top , int width, int height, bool enemy):
+    pictures(images),left(left), top(top), width(width), height(height), enemy(enemy)
 {
-    isEnemy = false;
-
     field.fill(CL_CLEAR, 100);
 
     playground.fill(CL_CLEAR, 100);
@@ -45,7 +43,7 @@ void Field::redraw()
         for(int j=0; j<10;j++)
         {
 
-            if(board->table[i][j] == 1 && !isEnemy){
+            if(board->table[i][j] == 1 && !enemy){
                 painter.drawImage(i*cfx,j*cfy,pictures->get("full"));
             }
 

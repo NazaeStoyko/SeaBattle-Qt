@@ -25,9 +25,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     pictures = new Images();
     pictures->load();
 
-    myFieldImage = new Field(pictures,40,39,216,217);
-    enemyFieldImage = new Field(pictures,322,39,214,217);
-    enemyFieldImage->isEnemy = true;
+    myFieldImage = new Field(pictures, 40, 39, 216, 217);
+    enemyFieldImage = new Field(pictures, 322, 39, 214, 217, true);
     chooseDialog = new Choose(this);
 
 

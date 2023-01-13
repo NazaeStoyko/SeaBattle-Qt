@@ -24,7 +24,7 @@ enum Cell
 class Field
 {
 public:
-    Field(Images *images, int left, int top, int width, int hight);
+    Field(Images *images, int left, int top, int width, int height, bool enemy = false);
     ~Field();
 
     const QImage& getImage()const;
@@ -36,7 +36,6 @@ public:
     int getX();
     int getY();
     Board *board;
-    bool isEnemy;
     bool isHit(int x , int y);
     int sunkShips = 0;
     void createBoard();
@@ -51,6 +50,7 @@ private:
     int top;
     int width;
     int height;
+    bool enemy;
 };
 
 #endif //FIELD_H
