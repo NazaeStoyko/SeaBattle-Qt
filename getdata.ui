@@ -50,6 +50,9 @@
      <height>300</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background: #333;</string>
+   </property>
   </widget>
  </widget>
  <resources/>

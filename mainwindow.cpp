@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
     connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
 
-        startGame();
+    startGame();
 }
 
 MainWindow::~MainWindow()
