@@ -7,7 +7,7 @@ class Coordinate
 public:
     short int row;
     short int column;
-    int index;
+    int index;  // TODO change into short
     Coordinate();
     Coordinate(short int row, short int column, int index);
 };

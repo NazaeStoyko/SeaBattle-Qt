@@ -43,7 +43,7 @@ void Field::redraw()
         for(int j=0; j<10;j++)
         {
 
-            if(board->table[i][j] == 1 && !enemy){
+            if(board->isHit(i, j) && !enemy){
                 painter.drawImage(i*cfx,j*cfy,pictures->get("full"));
             }
 
@@ -77,7 +77,7 @@ void Field::redraw()
 bool Field::isHit(int x , int y)
 {
     //QPainter painter(image);
-    return (board->table[x][y] == CellStatus::Ship);
+    return (board->isHit(x, y));
 }
 
 

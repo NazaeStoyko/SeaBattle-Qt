@@ -3,35 +3,26 @@
 
 #include <QVector>
 #include "coordinate.h"
-
-const int LENGHT = 10;
-
-enum CellStatus{
-    Empty,
-    Ship,
-    ShipBorder,
-    ShipHitted,
-    Dot
-};
-
+#include "cellstatus.h"
 
 class Board
 {
+    QVector<Coordinate> emptyCells;
 
 public:
-    short int table[LENGHT][LENGHT];
-    QVector<Coordinate> empty{};
-    int index = 0;
+    CellStatus table[BOARD_SIZE][BOARD_SIZE];  //TODO make it private
 
-    void draw(short int row, short int column, CellStatus cellStatus);
     void init();
-    Coordinate getEmptyCoordinate(QVector<Coordinate> vec);
-    void removeCoordinate(size_t index);
-    void drawTable();
-    short int drawShip(short int  shipLenght);
-    void borderShip(short int shipLenght, Coordinate coordinates);
-    void createShip(int lenght, int count);
+    void changeCellStatus(short int row, short int column, CellStatus cellStatus);
     void drawShips();
+    bool isHit(short int x, short int y);
+
+private:
+    void createShips(short int shipLenght, short int shipsCount);
+    Coordinate getEmptyCellCoordinate(QVector<Coordinate> &emptyCellsVector);
+    void removeCoordinate(short int index);
+    short int drawShip(short int shipLenght);
+    void setShipBorder(short int shipLenght, Coordinate coordinates);
 };
 
 #endif // BOARD_H

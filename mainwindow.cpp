@@ -9,14 +9,14 @@
 
 void MainWindow::startGame()
 {
+    qDebug()<<"In MainWindow::startGame()";
+
     myFieldImage->createBoard();
     myFieldImage->redraw();
     enemyFieldImage->createBoard();
     enemyFieldImage->redraw();
     botShipsCount = 20;
     humenShipsCount = 20;
-
-    qDebug()<<"startGame";
 }
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
@@ -27,18 +27,11 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     myFieldImage = new Field(pictures, 40, 39, 216, 217);
     enemyFieldImage = new Field(pictures, 322, 39, 214, 217, true);
-    chooseDialog = new Choose(this);
+    //    chooseDialog = new Choose(this);
+    //    connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
+    //    connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
 
-
-//    myFieldImage->createBoard();
-//    myFieldImage->redraw();
-//    enemyFieldImage->createBoard();
-//    enemyFieldImage->redraw();
-
-    connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
-    connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
-
-        startGame();
+    startGame();
 }
 
 MainWindow::~MainWindow()
@@ -65,7 +58,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
     if(state == ST_MAKING_STEP )
     {
-//        QPainter painter(this);
+        //        QPainter painter(this);
         QPoint point = enemyFieldImage->getCoord(pos.x(), pos.y());
 
         if(point.x()==-1)return;
@@ -92,14 +85,14 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         }
         else
         {
-            board->draw(point.x(), point.y(),CellStatus::Dot);
+            board->changeCellStatus(point.x(), point.y(),CellStatus::Dot);
             enemyFieldImage->setCell(point.x(),point.y(),CL_DOT);
             state = ST_BOT_STEP;
             qDebug()<<"Промах";
         }
 
         enemyFieldImage->redraw();
-//        this->update();
+        //        this->update();
     }
 
     while (state == ST_BOT_STEP)
@@ -130,7 +123,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         else if(board->table[xBot][yBot] == CellStatus::Empty)
         {
-            board->draw(xBot, yBot,CellStatus::Dot);
+            board->changeCellStatus(xBot, yBot,CellStatus::Dot);
             myFieldImage->setCell(xBot,yBot,CL_DOT);
             state = ST_MAKING_STEP;
 
@@ -152,4 +145,5 @@ void MainWindow::on_actionStart_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+
 }
