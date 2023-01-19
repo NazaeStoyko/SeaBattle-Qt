@@ -1,28 +1,28 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <QVector>
 #include "coordinate.h"
 #include "cellstatus.h"
+#include "ship.h"
+
 
 class Board
 {
-    QVector<Coordinate> emptyCells;
-
-public:
     CellStatus table[BOARD_SIZE][BOARD_SIZE];  //TODO make it private
 
+public:
     void init();
     void changeCellStatus(short int row, short int column, CellStatus cellStatus);
-    void drawShips();
-    bool isHit(short int x, short int y);
+    void placeShipsRandomly();
+    bool isHit(short int row, short int column);
+    CellStatus getCellStatus(short int row, short int column);
 
 private:
     void createShips(short int shipLenght, short int shipsCount);
-    Coordinate getEmptyCellCoordinate(QVector<Coordinate> &emptyCellsVector);
-    void removeCoordinate(short int index);
-    short int drawShip(short int shipLenght);
-    void setShipBorder(short int shipLenght, Coordinate coordinates);
+    Ship* createShip(short int shipLenght);
+    Coordinate getEmptyCellCoordinate();
+    void placeShipOnBoard(Ship* ship);
+    void drawBoardToConsole();
 };
 
 #endif // BOARD_H

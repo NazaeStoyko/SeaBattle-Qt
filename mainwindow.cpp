@@ -65,14 +65,14 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
         qDebug()<<"Ship at " << point.x() << point.y();
 
-        if( board->table[point.x()][point.y()] == CellStatus::ShipHitted || board->table[point.x()][point.y()] == CellStatus::Dot )
+        if(board->getCellStatus(point.x(), point.y()) == CellStatus::ShipHitted || board->getCellStatus(point.x(), point.y()) == CellStatus::Dot )
         {
             qDebug()<<"Тут вже стріляв!";
             return;
         }
         else if(enemyFieldImage->isHit(point.x(),point.y()))
         {
-            board->table[point.x()][point.y()] = CellStatus::ShipHitted;
+            board->changeCellStatus(point.x(), point.y(), CellStatus::ShipHitted);
             enemyFieldImage->setCell(point.x(),point.y(),CL_READFULL);
             qDebug()<<"Попали";
             botShipsCount--;
@@ -106,11 +106,11 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             yBot = QRandomGenerator::global()->bounded(0,FIELD_SIZE);
 
         }
-        while(board->table[xBot][yBot] == CellStatus::ShipHitted || board->table[xBot][yBot] == CellStatus::Dot );
+        while(board->getCellStatus(xBot, yBot) == CellStatus::ShipHitted || board->getCellStatus(xBot, yBot) == CellStatus::Dot);
 
-        if(board->table[xBot][yBot] == CellStatus::Ship)
+        if(board->getCellStatus(xBot, yBot) == CellStatus::Ship)
         {
-            board->table[xBot][yBot] = CellStatus::ShipHitted;
+            board->changeCellStatus(xBot, yBot, CellStatus::ShipHitted);
             myFieldImage->setCell(xBot,yBot,CL_READFULL);
             humenShipsCount--;
 
@@ -121,7 +121,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             }
         }
 
-        else if(board->table[xBot][yBot] == CellStatus::Empty)
+        else if(board->getCellStatus(xBot, yBot) == CellStatus::Empty)
         {
             board->changeCellStatus(xBot, yBot,CellStatus::Dot);
             myFieldImage->setCell(xBot,yBot,CL_DOT);
@@ -145,5 +145,4 @@ void MainWindow::on_actionStart_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
-
 }

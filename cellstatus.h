@@ -3,7 +3,7 @@
 
 #define BOARD_SIZE 10
 
-enum CellStatus{
+enum class CellStatus{
     Empty = 0,
     Ship,
     ShipBorder,

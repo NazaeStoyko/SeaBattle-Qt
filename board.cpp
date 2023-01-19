@@ -3,16 +3,14 @@
 #include <QRandomGenerator>
 #include <QDebug>
 
+
 void Board::init()
 {
-    short int index = 0;
     for (short int row = 0; row < BOARD_SIZE; row++)
     {
         for (short int column = 0; column < BOARD_SIZE; column++)
         {
             this->changeCellStatus(row, column, CellStatus::Empty);
-            this->emptyCells.push_back(Coordinate(row, column, index));
-            ++index;
         }
     }
 }
@@ -20,11 +18,13 @@ void Board::init()
 
 void Board::changeCellStatus(short row, short column, CellStatus cellStatus)
 {
-    this->table[row][column] = cellStatus;
+    if(row >= 0 && row < 10 && column >= 0 && column < 10){
+        this->table[row][column] = cellStatus;
+    }
 }
 
 
-void Board::drawShips()
+void Board::placeShipsRandomly()
 {
     createShips(4, 1);
     createShips(3, 2);
@@ -37,111 +37,160 @@ void Board::createShips(short shipLenght, short shipsCount)
 {
     for (short i = 0; i < shipsCount; i++)
     {
-        drawShip(shipLenght);
+        Ship *newShip = createShip(shipLenght);
+        placeShipOnBoard(newShip);
+        delete newShip;
     }
 }
 
 
-short int Board::drawShip(short shipLenght)
+Ship* Board::createShip(short shipLenght)
 {
-    bool finish = false;
-    Coordinate emptyCellCoordinate;
+    Ship* ship = new Ship(Orientation(QRandomGenerator::global()->generate() % 2));
 
-    while (!finish)
+    while (ship->length() != shipLenght)
     {
-        emptyCellCoordinate = getEmptyCellCoordinate(this->emptyCells);
-
-        int result = 0;
-
-        for (short int index = 0; index < shipLenght; index++)
+        ship->clear();
+        ship->append(getEmptyCellCoordinate());
+        if(ship->length() == shipLenght)
         {
-            if (emptyCellCoordinate.column + index < BOARD_SIZE)
+            return ship;
+        }
+        if(ship->getOrientation() == Orientation::HORIZONTAL)
+        {
+            bool canAddCellToRight = true;
+            while(ship->length() != shipLenght)
             {
-                if (this->table[emptyCellCoordinate.row + index][emptyCellCoordinate.column ] == 0)
+                if (canAddCellToRight) {
+                    Coordinate nextRigthCell(ship->getLast().row, ship->getLast().column + 1);
+                    if((nextRigthCell.column < 10)
+                            & (table[nextRigthCell.row][nextRigthCell.column] == CellStatus::Empty))
+                    {
+                        ship->append(nextRigthCell);
+                    } else
+                    {
+                        canAddCellToRight = false;
+                    }
+                } else
                 {
-                    result += 1;
+                    Coordinate nextLeftCell(ship->getFirst().row, ship->getFirst().column - 1);
+                    if((nextLeftCell.column > -1)
+                            & (table[nextLeftCell.row][nextLeftCell.column] == CellStatus::Empty))
+                    {
+                        ship->prepend(nextLeftCell);
+                    } else
+                    {
+                        break;
+                    }
+                }
+            }
+        } else
+        {
+            bool canAddCellToBottom = true;
+            while(ship->length() != shipLenght)
+            {
+                if (canAddCellToBottom) {
+                    Coordinate nextBottomCell(ship->getLast().row + 1, ship->getLast().column);
+                    if((nextBottomCell.row < 10)
+                            & (table[nextBottomCell.row][nextBottomCell.column] == CellStatus::Empty))
+                    {
+                        ship->append(nextBottomCell);
+                    } else
+                    {
+                        canAddCellToBottom = false;
+                    }
+                } else
+                {
+                    Coordinate nextTopCell(ship->getFirst().row - 1, ship->getFirst().column);
+                    if((nextTopCell.column > -1)
+                            & (table[nextTopCell.row][nextTopCell.column] == CellStatus::Empty))
+                    {
+                        ship->prepend(nextTopCell);
+                    } else
+                    {
+                        break;
+                    }
                 }
             }
         }
-
-        if (result == shipLenght)
-        {
-            removeCellFromEmptyCellVector(emptyCellCoordinate.index);
-
-            finish = true;
-        }
     }
-    setShipBorder(shipLenght, emptyCellCoordinate);
-    return true;
+    return ship;
 }
 
 
-Coordinate Board::getEmptyCellCoordinate(QVector<Coordinate> &emptyCellsVector)
+Coordinate Board::getEmptyCellCoordinate()
 {
-    short int size = emptyCellsVector.size();
-    short int randomIndex = QRandomGenerator::global()->generate() % size;
+    short int randomNumber;
+    do
+    {
+        randomNumber = QRandomGenerator::global()->generate() % 100;
+    }
+    while (table[randomNumber / 10][randomNumber % 10] != CellStatus::Empty);
 
-    return Coordinate(emptyCellsVector[randomIndex].row, emptyCellsVector[randomIndex].column, emptyCellsVector[randomIndex].index);
+    return Coordinate(randomNumber / 10, randomNumber % 10);
 }
 
 
-void Board::removeCellFromEmptyCellVector(short index)
+void Board::placeShipOnBoard(Ship* ship)
 {
-    this->emptyCells.erase(this->emptyCells.begin() + index);
+    Coordinate firstShipCell = ship->getFirst();
+    Coordinate lastShipCell = ship->getLast();
+
+    if (ship->getOrientation() == Orientation::HORIZONTAL)
+    {
+        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column - 1, CellStatus::ShipBorder);
+        this->changeCellStatus(firstShipCell.row, firstShipCell.column - 1, CellStatus::ShipBorder);
+        this->changeCellStatus(firstShipCell.row + 1, firstShipCell.column - 1, CellStatus::ShipBorder);
+
+        for (Coordinate coordinate : ship->getCoordinatesList())
+        {
+            this->changeCellStatus(coordinate.row - 1, coordinate.column, CellStatus::ShipBorder);
+            this->changeCellStatus(coordinate.row, coordinate.column, CellStatus::Ship);
+            this->changeCellStatus(coordinate.row + 1, coordinate.column, CellStatus::ShipBorder);
+        }
+
+        this->changeCellStatus(lastShipCell.row - 1, lastShipCell.column + 1, CellStatus::ShipBorder);
+        this->changeCellStatus(lastShipCell.row, lastShipCell.column + 1, CellStatus::ShipBorder);
+        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column + 1, CellStatus::ShipBorder);
+    } else
+    {
+        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column - 1, CellStatus::ShipBorder);
+        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column, CellStatus::ShipBorder);
+        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column + 1, CellStatus::ShipBorder);
+
+        for (Coordinate coordinate : ship->getCoordinatesList())
+        {
+            this->changeCellStatus(coordinate.row, coordinate.column - 1, CellStatus::ShipBorder);
+            this->changeCellStatus(coordinate.row, coordinate.column, CellStatus::Ship);
+            this->changeCellStatus(coordinate.row, coordinate.column + 1, CellStatus::ShipBorder);
+        }
+        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column - 1, CellStatus::ShipBorder);
+        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column, CellStatus::ShipBorder);
+        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column + 1, CellStatus::ShipBorder);
+    }
 }
 
-
-void Board::setShipBorder(short shipLenght, Coordinate coordinates) {
-
-    for (short int index = 0; index < shipLenght; index++)
-    {
-        changeCellStatus(coordinates.row + index, coordinates.column , CellStatus::Ship);
-
-        if (coordinates.column > 0)
-        {
-            changeCellStatus(coordinates.row + index, coordinates.column -1, CellStatus::ShipBorder);
-        }
-
-        if (coordinates.column < 9)
-        {
-            changeCellStatus(coordinates.row + index, coordinates.column +1, CellStatus::ShipBorder);
-        }
-    }
-
-    if (coordinates.row + shipLenght < BOARD_SIZE)
-    {
-        changeCellStatus(coordinates.row + shipLenght, coordinates.column , CellStatus::ShipBorder);
-
-        if (coordinates.column > 0)
-        {
-            changeCellStatus(coordinates.row + shipLenght, coordinates.column - 1, CellStatus::ShipBorder);
-        }
-        if (coordinates.column < 9)
-        {
-            changeCellStatus(coordinates.row + shipLenght, coordinates.column + 1 , CellStatus::ShipBorder);
-        }
-    }
-
-
-    if (coordinates.row > 0)
-    {
-        changeCellStatus(coordinates.row - 1, coordinates.column , CellStatus::ShipBorder);
-
-        if (coordinates.column > 0)
-        {
-            changeCellStatus(coordinates.row - 1, coordinates.column - 1, CellStatus::ShipBorder);
-        }
-        if (coordinates.column < 9)
-        {
-            changeCellStatus(coordinates.row - 1, coordinates.column + 1, CellStatus::ShipBorder);
-        }
-    }
-
-}
-
-bool Board::isHit(short x, short y)
+void Board::drawBoardToConsole()
 {
-    return (this->table[x][y] == CellStatus::Ship);
+    QString string;
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            string.append(QString::number((int)table[j][i]));
+        }
+        qDebug() << string;
+        string.clear();
+    }
+    qDebug() << " ";
+}
+
+bool Board::isHit(short row, short column)
+{
+    return (this->table[row][column] == CellStatus::Ship);
+}
+
+CellStatus Board::getCellStatus(short row, short column)
+{
+    return this->table[row][column];
 }
 
 

@@ -3,7 +3,7 @@
 void Field::createBoard()
 {
     board->init();
-    board->drawShips();
+    board->placeShipsRandomly();
 }
 
 Field::Field(Images* images , int left , int top , int width, int height, bool enemy):
