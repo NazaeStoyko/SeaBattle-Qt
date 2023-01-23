@@ -130,7 +130,7 @@ color:#717072;
      <string/>
     </property>
     <property name="text">
-     <string>Age</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -139,7 +139,10 @@ color:#717072;
      <enum>QLineEdit::Normal</enum>
     </property>
     <property name="cursorPosition">
-     <number>3</number>
+     <number>0</number>
+    </property>
+    <property name="placeholderText">
+     <string>Age</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="Nick">
@@ -155,10 +158,13 @@ color:#717072;
      <string/>
     </property>
     <property name="text">
-     <string>Nickname            </string>
+     <string>            </string>
     </property>
     <property name="maxLength">
      <number>300</number>
+    </property>
+    <property name="placeholderText">
+     <string>Nickname</string>
     </property>
    </widget>
   </widget>
