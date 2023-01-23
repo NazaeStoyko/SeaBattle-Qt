@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 #include <QImage>
-#include <QPainter>
-#include <QPoint>
 #include <QMouseEvent>
 #include <QDebug>
 #include <QVector>
@@ -22,11 +20,11 @@ class MainWindow;
 QT_END_NAMESPACE
 
 
-enum State
+enum class GameState
 {
-    ST_PLACING_SHIPS,
-    ST_BOT_STEP,
-    ST_MAKING_STEP
+    PLACING_SHIPS,
+    PLAYER_STEP,
+    BOT_STEP
 };
 
 class MainWindow : public QMainWindow
@@ -48,11 +46,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Images *pictures;
-    Field *myFieldImage;
-    Field *enemyFieldImage;
-    Board *board;
-    State state;
+    Images *images;
+    Field *myField;
+    Field *enemyField;
+    GameState gameState;
     Choose *chooseDialog;
     short int botShipsCount;
     short int humenShipsCount;

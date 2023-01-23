@@ -10,9 +10,15 @@ void Board::init()
     {
         for (short int column = 0; column < BOARD_SIZE; column++)
         {
-            this->changeCellStatus(row, column, CellStatus::Empty);
+            this->changeCellStatus(row, column, CellStatus::EMPTY);
         }
     }
+}
+
+
+void Board::changeCellStatus(const Coordinate &coordinate, CellStatus cellStatus)
+{
+    this->changeCellStatus(coordinate.getRow(), coordinate.getColumn(), cellStatus);
 }
 
 
@@ -62,9 +68,9 @@ Ship* Board::createShip(short shipLenght)
             while(ship->length() != shipLenght)
             {
                 if (canAddCellToRight) {
-                    Coordinate nextRigthCell(ship->getLast().row, ship->getLast().column + 1);
-                    if((nextRigthCell.column < 10)
-                            & (table[nextRigthCell.row][nextRigthCell.column] == CellStatus::Empty))
+                    Coordinate nextRigthCell(ship->getLast().getRow(), ship->getLast().getColumn() + 1);
+                    if((nextRigthCell.getColumn() < 10)
+                            & (table[nextRigthCell.getRow()][nextRigthCell.getColumn()] == CellStatus::EMPTY))
                     {
                         ship->append(nextRigthCell);
                     } else
@@ -73,9 +79,9 @@ Ship* Board::createShip(short shipLenght)
                     }
                 } else
                 {
-                    Coordinate nextLeftCell(ship->getFirst().row, ship->getFirst().column - 1);
-                    if((nextLeftCell.column > -1)
-                            & (table[nextLeftCell.row][nextLeftCell.column] == CellStatus::Empty))
+                    Coordinate nextLeftCell(ship->getFirst().getRow(), ship->getFirst().getColumn() - 1);
+                    if((nextLeftCell.getColumn() > -1)
+                            & (table[nextLeftCell.getRow()][nextLeftCell.getColumn()] == CellStatus::EMPTY))
                     {
                         ship->prepend(nextLeftCell);
                     } else
@@ -90,9 +96,9 @@ Ship* Board::createShip(short shipLenght)
             while(ship->length() != shipLenght)
             {
                 if (canAddCellToBottom) {
-                    Coordinate nextBottomCell(ship->getLast().row + 1, ship->getLast().column);
-                    if((nextBottomCell.row < 10)
-                            & (table[nextBottomCell.row][nextBottomCell.column] == CellStatus::Empty))
+                    Coordinate nextBottomCell(ship->getLast().getRow() + 1, ship->getLast().getColumn());
+                    if((nextBottomCell.getRow() < 10)
+                            & (table[nextBottomCell.getRow()][nextBottomCell.getColumn()] == CellStatus::EMPTY))
                     {
                         ship->append(nextBottomCell);
                     } else
@@ -101,9 +107,9 @@ Ship* Board::createShip(short shipLenght)
                     }
                 } else
                 {
-                    Coordinate nextTopCell(ship->getFirst().row - 1, ship->getFirst().column);
-                    if((nextTopCell.column > -1)
-                            & (table[nextTopCell.row][nextTopCell.column] == CellStatus::Empty))
+                    Coordinate nextTopCell(ship->getFirst().getRow() - 1, ship->getFirst().getColumn());
+                    if((nextTopCell.getColumn() > -1)
+                            & (table[nextTopCell.getRow()][nextTopCell.getColumn()] == CellStatus::EMPTY))
                     {
                         ship->prepend(nextTopCell);
                     } else
@@ -125,7 +131,7 @@ Coordinate Board::getEmptyCellCoordinate()
     {
         randomNumber = QRandomGenerator::global()->generate() % 100;
     }
-    while (table[randomNumber / 10][randomNumber % 10] != CellStatus::Empty);
+    while (table[randomNumber / 10][randomNumber % 10] != CellStatus::EMPTY);
 
     return Coordinate(randomNumber / 10, randomNumber % 10);
 }
@@ -138,35 +144,35 @@ void Board::placeShipOnBoard(Ship* ship)
 
     if (ship->getOrientation() == Orientation::HORIZONTAL)
     {
-        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column - 1, CellStatus::ShipBorder);
-        this->changeCellStatus(firstShipCell.row, firstShipCell.column - 1, CellStatus::ShipBorder);
-        this->changeCellStatus(firstShipCell.row + 1, firstShipCell.column - 1, CellStatus::ShipBorder);
+        this->changeCellStatus(firstShipCell.getRow() - 1, firstShipCell.getColumn() - 1, CellStatus::SHIP_BORDER);
+        this->changeCellStatus(firstShipCell.getRow(), firstShipCell.getColumn() - 1, CellStatus::SHIP_BORDER);
+        this->changeCellStatus(firstShipCell.getRow() + 1, firstShipCell.getColumn() - 1, CellStatus::SHIP_BORDER);
 
         for (Coordinate coordinate : ship->getCoordinatesList())
         {
-            this->changeCellStatus(coordinate.row - 1, coordinate.column, CellStatus::ShipBorder);
-            this->changeCellStatus(coordinate.row, coordinate.column, CellStatus::Ship);
-            this->changeCellStatus(coordinate.row + 1, coordinate.column, CellStatus::ShipBorder);
+            this->changeCellStatus(coordinate.getRow() - 1, coordinate.getColumn(), CellStatus::SHIP_BORDER);
+            this->changeCellStatus(coordinate.getRow(), coordinate.getColumn(), CellStatus::SHIP);
+            this->changeCellStatus(coordinate.getRow() + 1, coordinate.getColumn(), CellStatus::SHIP_BORDER);
         }
 
-        this->changeCellStatus(lastShipCell.row - 1, lastShipCell.column + 1, CellStatus::ShipBorder);
-        this->changeCellStatus(lastShipCell.row, lastShipCell.column + 1, CellStatus::ShipBorder);
-        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column + 1, CellStatus::ShipBorder);
+        this->changeCellStatus(lastShipCell.getRow() - 1, lastShipCell.getColumn() + 1, CellStatus::SHIP_BORDER);
+        this->changeCellStatus(lastShipCell.getRow(), lastShipCell.getColumn() + 1, CellStatus::SHIP_BORDER);
+        this->changeCellStatus(lastShipCell.getRow() + 1, lastShipCell.getColumn() + 1, CellStatus::SHIP_BORDER);
     } else
     {
-        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column - 1, CellStatus::ShipBorder);
-        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column, CellStatus::ShipBorder);
-        this->changeCellStatus(firstShipCell.row - 1, firstShipCell.column + 1, CellStatus::ShipBorder);
+        this->changeCellStatus(firstShipCell.getRow() - 1, firstShipCell.getColumn() - 1, CellStatus::SHIP_BORDER);
+        this->changeCellStatus(firstShipCell.getRow() - 1, firstShipCell.getColumn(), CellStatus::SHIP_BORDER);
+        this->changeCellStatus(firstShipCell.getRow() - 1, firstShipCell.getColumn() + 1, CellStatus::SHIP_BORDER);
 
         for (Coordinate coordinate : ship->getCoordinatesList())
         {
-            this->changeCellStatus(coordinate.row, coordinate.column - 1, CellStatus::ShipBorder);
-            this->changeCellStatus(coordinate.row, coordinate.column, CellStatus::Ship);
-            this->changeCellStatus(coordinate.row, coordinate.column + 1, CellStatus::ShipBorder);
+            this->changeCellStatus(coordinate.getRow(), coordinate.getColumn() - 1, CellStatus::SHIP_BORDER);
+            this->changeCellStatus(coordinate.getRow(), coordinate.getColumn(), CellStatus::SHIP);
+            this->changeCellStatus(coordinate.getRow(), coordinate.getColumn() + 1, CellStatus::SHIP_BORDER);
         }
-        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column - 1, CellStatus::ShipBorder);
-        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column, CellStatus::ShipBorder);
-        this->changeCellStatus(lastShipCell.row + 1, lastShipCell.column + 1, CellStatus::ShipBorder);
+        this->changeCellStatus(lastShipCell.getRow() + 1, lastShipCell.getColumn() - 1, CellStatus::SHIP_BORDER);
+        this->changeCellStatus(lastShipCell.getRow() + 1, lastShipCell.getColumn(), CellStatus::SHIP_BORDER);
+        this->changeCellStatus(lastShipCell.getRow() + 1, lastShipCell.getColumn() + 1, CellStatus::SHIP_BORDER);
     }
 }
 
@@ -183,16 +189,27 @@ void Board::drawBoardToConsole()
     qDebug() << " ";
 }
 
+bool Board::isHit(Coordinate coordinate)
+{
+    return this->isHit(coordinate.getRow(), coordinate.getColumn());
+}
+
+
 bool Board::isHit(short row, short column)
 {
-    return (this->table[row][column] == CellStatus::Ship);
+    return (this->table[row][column] == CellStatus::SHIP);
 }
+
+
+CellStatus Board::getCellStatus(Coordinate coordinate)
+{
+    return this->getCellStatus(coordinate.getRow(), coordinate.getColumn());
+}
+
 
 CellStatus Board::getCellStatus(short row, short column)
 {
     return this->table[row][column];
 }
-
-
 
 

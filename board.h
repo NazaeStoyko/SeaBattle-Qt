@@ -12,9 +12,12 @@ class Board
 
 public:
     void init();
+    void changeCellStatus(const Coordinate &coordinate, CellStatus cellStatus);
     void changeCellStatus(short int row, short int column, CellStatus cellStatus);
     void placeShipsRandomly();
+    bool isHit(Coordinate coordinate);
     bool isHit(short int row, short int column);
+    CellStatus getCellStatus(Coordinate coordinate);
     CellStatus getCellStatus(short int row, short int column);
 
 private:

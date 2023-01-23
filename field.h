@@ -3,22 +3,9 @@
 
 #include <QVector>
 #include <QImage>
-#include <QDebug>
-#include <QPainter>
 #include <QPoint>
-#include <QRandomGenerator>
 #include "images.h"
 #include "board.h"
-
-enum Cell
-{
-    CL_CLEAR = 0,
-    CL_SHIP,
-    CL_DOT,
-    CL_HALF,
-    CL_READFULL,
-    CL_REDHALL
-};
 
 
 class Field
@@ -26,25 +13,21 @@ class Field
 public:
     Field(Images *images, int left, int top, int width, int height, bool enemy = false);
     ~Field();
-
-    const QImage& getImage()const;
+    void init();
     void redraw();
-    Cell getCell (int x, int y);
-    void setCell(int x,int y, Cell cell);
-    QPoint getCoord(int x, int y);
-
+    const QImage& getImage() const;
+    Coordinate getCoordinate(QPoint point);
+    void setCellStatus(const Coordinate &coordinate, CellStatus cellStatus);
+    CellStatus getCellStatus(const Coordinate &coordinate);
     int getX();
     int getY();
-    Board *board;
-    bool isHit(int x , int y);
-    int sunkShips = 0;
-    void createBoard();
 
 private:
-    QImage *image;
-    Images *pictures;
-    QVector<Cell> field;
-    QVector<Cell> playground;
+    void createBoard();
+    QImage *fieldImage;
+    Images *images;
+    Board *board;
+    QVector<CellStatus> playground;
 
     int left;
     int top;

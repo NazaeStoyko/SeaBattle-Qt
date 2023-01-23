@@ -4,11 +4,11 @@
 #define BOARD_SIZE 10
 
 enum class CellStatus{
-    Empty = 0,
-    Ship,
-    ShipBorder,
-    ShipHitted,
-    Dot
+    EMPTY = 0,
+    SHIP,
+    SHIP_BORDER,
+    SHIP_HITTED,
+    DOT
 };
 
 #endif // CELLSTATUS_H

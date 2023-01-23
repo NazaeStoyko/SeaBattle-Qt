@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/User/Pictures/download.jpg</normaloff>C:/Users/User/Pictures/download.jpg</iconset>
+    <normaloff>../../../Users/User/Pictures/download.jpg</normaloff>../../../Users/User/Pictures/download.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">#Form{
@@ -132,6 +132,9 @@ color:#717072;
     <property name="text">
      <string/>
     </property>
+    <property name="maxLength">
+     <number>2</number>
+    </property>
     <property name="frame">
      <bool>true</bool>
     </property>
@@ -139,7 +142,7 @@ color:#717072;
      <enum>QLineEdit::Normal</enum>
     </property>
     <property name="cursorPosition">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="placeholderText">
      <string>Age</string>
@@ -158,7 +161,7 @@ color:#717072;
      <string/>
     </property>
     <property name="text">
-     <string>            </string>
+     <string/>
     </property>
     <property name="maxLength">
      <number>300</number>
@@ -185,7 +188,7 @@ border-radius: 30px;
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</normaloff>C:/Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</iconset>
+     <normaloff>../../../Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</normaloff>../../../Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -195,6 +198,12 @@ border-radius: 30px;
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>Age</tabstop>
+  <tabstop>Nick</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>toolButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
