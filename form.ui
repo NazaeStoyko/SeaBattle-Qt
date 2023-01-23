@@ -127,7 +127,7 @@ color:#717072;
      </rect>
     </property>
     <property name="inputMask">
-     <string/>
+     <string>DD</string>
     </property>
     <property name="text">
      <string/>
