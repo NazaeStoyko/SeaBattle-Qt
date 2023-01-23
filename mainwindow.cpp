@@ -1,4 +1,4 @@
-﻿#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "field.h"
 
@@ -9,14 +9,14 @@
 
 void MainWindow::startGame()
 {
+    qDebug()<<"In MainWindow::startGame()";
+
     myFieldImage->createBoard();
     myFieldImage->redraw();
     enemyFieldImage->createBoard();
     enemyFieldImage->redraw();
     botShipsCount = 20;
     humenShipsCount = 20;
-
-    qDebug()<<"startGame";
 }
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
@@ -27,16 +27,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     myFieldImage = new Field(pictures, 40, 39, 216, 217);
     enemyFieldImage = new Field(pictures, 322, 39, 214, 217, true);
-    chooseDialog = new Choose(this);
-
-
-//    myFieldImage->createBoard();
-//    myFieldImage->redraw();
-//    enemyFieldImage->createBoard();
-//    enemyFieldImage->redraw();
-
-    connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
-    connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
+    //    chooseDialog = new Choose(this);
+    //    connect(chooseDialog, &Choose::accepted, this, &MainWindow::startGame);
+    //    connect(chooseDialog, &Choose::accepted, chooseDialog, &Choose::hide);
 
     startGame();
 }
@@ -65,21 +58,21 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
 
     if(state == ST_MAKING_STEP )
     {
-//        QPainter painter(this);
+        //        QPainter painter(this);
         QPoint point = enemyFieldImage->getCoord(pos.x(), pos.y());
 
         if(point.x()==-1)return;
 
         qDebug()<<"Ship at " << point.x() << point.y();
 
-        if( board->table[point.x()][point.y()] == CellStatus::ShipHitted || board->table[point.x()][point.y()] == CellStatus::Dot )
+        if(board->getCellStatus(point.x(), point.y()) == CellStatus::ShipHitted || board->getCellStatus(point.x(), point.y()) == CellStatus::Dot )
         {
             qDebug()<<"Тут вже стріляв!";
             return;
         }
         else if(enemyFieldImage->isHit(point.x(),point.y()))
         {
-            board->table[point.x()][point.y()] = CellStatus::ShipHitted;
+            board->changeCellStatus(point.x(), point.y(), CellStatus::ShipHitted);
             enemyFieldImage->setCell(point.x(),point.y(),CL_READFULL);
             qDebug()<<"Попали";
             botShipsCount--;
@@ -92,14 +85,14 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         }
         else
         {
-            board->draw(point.x(), point.y(),CellStatus::Dot);
+            board->changeCellStatus(point.x(), point.y(),CellStatus::Dot);
             enemyFieldImage->setCell(point.x(),point.y(),CL_DOT);
             state = ST_BOT_STEP;
             qDebug()<<"Промах";
         }
 
         enemyFieldImage->redraw();
-//        this->update();
+        //        this->update();
     }
 
     while (state == ST_BOT_STEP)
@@ -113,11 +106,11 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             yBot = QRandomGenerator::global()->bounded(0,FIELD_SIZE);
 
         }
-        while(board->table[xBot][yBot] == CellStatus::ShipHitted || board->table[xBot][yBot] == CellStatus::Dot );
+        while(board->getCellStatus(xBot, yBot) == CellStatus::ShipHitted || board->getCellStatus(xBot, yBot) == CellStatus::Dot);
 
-        if(board->table[xBot][yBot] == CellStatus::Ship)
+        if(board->getCellStatus(xBot, yBot) == CellStatus::Ship)
         {
-            board->table[xBot][yBot] = CellStatus::ShipHitted;
+            board->changeCellStatus(xBot, yBot, CellStatus::ShipHitted);
             myFieldImage->setCell(xBot,yBot,CL_READFULL);
             humenShipsCount--;
 
@@ -128,9 +121,9 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             }
         }
 
-        else if(board->table[xBot][yBot] == CellStatus::Empty)
+        else if(board->getCellStatus(xBot, yBot) == CellStatus::Empty)
         {
-            board->draw(xBot, yBot,CellStatus::Dot);
+            board->changeCellStatus(xBot, yBot,CellStatus::Dot);
             myFieldImage->setCell(xBot,yBot,CL_DOT);
             state = ST_MAKING_STEP;
 

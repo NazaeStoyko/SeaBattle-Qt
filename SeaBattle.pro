@@ -20,10 +20,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
+    ship.cpp \
     sqlitedbmanager.cpp
 
 HEADERS += \
     board.h \
+    cellstatus.h \
     choose.h \
     coordinate.h \
     dbmanager.h \
@@ -33,6 +35,7 @@ HEADERS += \
     images.h \
     mainwindow.h \
     player.h \
+    ship.h \
     sqlitedbmanager.h
 
 FORMS += \

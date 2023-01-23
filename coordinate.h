@@ -2,14 +2,13 @@
 #define COORDINATE_H
 
 
-class Coordinate
+struct Coordinate
 {
 public:
     short int row;
     short int column;
-    int index;
     Coordinate();
-    Coordinate(short int row, short int column, int index);
+    Coordinate(short int row, short int column);
 };
 
 #endif
