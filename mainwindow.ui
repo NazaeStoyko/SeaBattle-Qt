@@ -29,6 +29,9 @@
    <iconset>
     <normaloff>C:/Users/User/Pictures/download.jpg</normaloff>C:/Users/User/Pictures/download.jpg</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
