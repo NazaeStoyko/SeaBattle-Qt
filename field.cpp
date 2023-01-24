@@ -22,7 +22,6 @@ Field::~Field()
 
 void Field::init()
 {
-    playground.fill(CellStatus::EMPTY, 100);
     this->createBoard();
 }
 

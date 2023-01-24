@@ -27,7 +27,6 @@ private:
     QImage *fieldImage;
     Images *images;
     Board *board;
-    QVector<CellStatus> playground;
 
     int left;
     int top;
