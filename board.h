@@ -2,7 +2,7 @@
 #define BOARD_H
 
 #include "coordinate.h"
-#include "cellstatus.h"
+#include "enums.h"
 #include "ship.h"
 
 

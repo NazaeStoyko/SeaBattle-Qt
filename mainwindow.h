@@ -9,7 +9,6 @@
 
 #include "images.h"
 #include "field.h"
-#include "board.h"
 #include "choose.h"
 
 
@@ -19,13 +18,6 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-
-enum class GameState
-{
-    PLACING_SHIPS,
-    PLAYER_STEP,
-    BOT_STEP
-};
 
 class MainWindow : public QMainWindow
 {
@@ -53,6 +45,7 @@ private:
     Choose *chooseDialog;
     short int botShipsCount;
     short int humenShipsCount;
+    DifficultyLevel difficultyLevel = DifficultyLevel::HARD;
 };
 
 #endif // MAIN_WINDOW_H

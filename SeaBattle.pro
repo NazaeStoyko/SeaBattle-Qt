@@ -25,10 +25,10 @@ SOURCES += \
 
 HEADERS += \
     board.h \
-    cellstatus.h \
     choose.h \
     coordinate.h \
     dbmanager.h \
+    enums.h \
     field.h \
     form.h \
     getdata.h \
