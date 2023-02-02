@@ -30,3 +30,13 @@ short Coordinate::getColumn() const
 {
     return column;
 }
+
+QList<Coordinate> Coordinate::getCornerCellsCoordinates() const
+{
+    QList<Coordinate> cornerCellsCoordinates(4);
+    cornerCellsCoordinates.append(Coordinate(this->row - 1, this->column - 1));
+    cornerCellsCoordinates.append(Coordinate(this->row - 1, this->column + 1));
+    cornerCellsCoordinates.append(Coordinate(this->row + 1, this->column - 1));
+    cornerCellsCoordinates.append(Coordinate(this->row + 1, this->column + 1));
+    return cornerCellsCoordinates;
+}

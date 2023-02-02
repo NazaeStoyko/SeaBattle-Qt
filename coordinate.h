@@ -1,6 +1,7 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
+#include <QList>
 
 class  Coordinate
 {
@@ -14,6 +15,7 @@ public:
     short getRow() const;
     void setColumn(short column);
     short getColumn() const;
+    QList<Coordinate> getCornerCellsCoordinates() const;
 };
 
 #endif
