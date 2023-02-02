@@ -6,7 +6,7 @@
 #include <QRandomGenerator>
 
 
-MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(DifficultyLevel difficultyLevel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow), difficultyLevel(difficultyLevel)
 {
     ui->setupUi(this);
     images = new Images();
@@ -91,7 +91,7 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
         this->update();
     }
 
-    while (gameState == GameState::BOT_STEP)
+    while (gameState == GameState::BOT_STEP && humenShipsCount > 0)
     {
         Coordinate botHitCoordinate;
         do
@@ -100,11 +100,18 @@ void MainWindow::mousePressEvent(QMouseEvent *ev)
             botHitCoordinate.setColumn(QRandomGenerator::global()->bounded(0, BOARD_SIZE));
         }
         while(myField->getCellStatus(botHitCoordinate) == CellStatus::SHIP_HITTED
-              || myField->getCellStatus(botHitCoordinate) == CellStatus::DOT);
+              || myField->getCellStatus(botHitCoordinate) == CellStatus::DOT
+              || myField->getCellStatus(botHitCoordinate) == CellStatus::SUNK_SHIP_BORDER);
 
         if(myField->getCellStatus(botHitCoordinate) == CellStatus::SHIP)
         {
             myField->setCellStatus(botHitCoordinate, CellStatus::SHIP_HITTED);
+            if (this->difficultyLevel == DifficultyLevel::HARD)
+            {
+                foreach (Coordinate cornerCellcoordinate, botHitCoordinate.getCornerCellsCoordinates()) {
+                    myField->setCellStatus(cornerCellcoordinate, CellStatus::SUNK_SHIP_BORDER);
+                }
+            }
             humenShipsCount--;
 
             if(humenShipsCount == 0)

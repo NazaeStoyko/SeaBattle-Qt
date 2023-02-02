@@ -9,9 +9,6 @@ int main( int argc, char* argv[] )
 {
     QApplication a( argc, argv );
 
-    MainWindow w;
-    w.show();
-
     Form form;
     form.setModal(true);
     form.exec();

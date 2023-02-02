@@ -2,6 +2,7 @@
 #include "ui_form.h"
 #include "player.h"
 #include "sqlitedbmanager.h"
+#include "mainwindow.h"
 
 Form::Form(QWidget *parent) :
     QDialog(parent),
@@ -21,5 +22,8 @@ void Form::on_pushButton_clicked()
 {
     Player newPlayer(ui->Age->text(), ui->Nick->text().toInt());
     dbmanager->inserIntoTable(newPlayer);
-    hide();
+    this->hide();
+    DifficultyLevel difficultyLevel = ui->rbHard->isChecked() ? DifficultyLevel::HARD : DifficultyLevel::NORMAL;
+    MainWindow* w = new MainWindow(difficultyLevel);
+    w->show();
 }

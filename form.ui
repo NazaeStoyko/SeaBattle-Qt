@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../Users/User/Pictures/download.jpg</normaloff>../../../Users/User/Pictures/download.jpg</iconset>
+    <normaloff>../../Users/User/Pictures/download.jpg</normaloff>../../Users/User/Pictures/download.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">#Form{
@@ -152,7 +152,7 @@ color:#717072;
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>170</y>
+      <y>140</y>
       <width>244</width>
       <height>28</height>
      </rect>
@@ -169,6 +169,48 @@ color:#717072;
     <property name="placeholderText">
      <string>Nickname</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>180</y>
+      <width>241</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Difficulty level</string>
+    </property>
+    <widget class="QRadioButton" name="rbNormal">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>91</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Normal</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="rbHard">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>30</y>
+       <width>91</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Hard</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QToolButton" name="toolButton">
@@ -188,7 +230,7 @@ border-radius: 30px;
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</normaloff>../../../Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</iconset>
+     <normaloff>../../Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</normaloff>../../Users/User/Downloads/Voraevich-343-hrC_FH3WX-transformed.png</iconset>
    </property>
    <property name="iconSize">
     <size>
