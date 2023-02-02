@@ -17,8 +17,8 @@ public:
     ~Form();
 
 private slots:
-    void on_pushButton_clicked();
-    //void on_Form_accepted();
+    void on_pbEnter_clicked();
+    void onFieldsAreFilled();
 
 private:
     Ui::Form *ui;

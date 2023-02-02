@@ -9,8 +9,10 @@ Form::Form(QWidget *parent) :
     ui(new Ui::Form)
 {
     dbmanager = SqliteDBManager::getInstance();
-
     ui->setupUi(this);
+    ui->pbEnter->hide();
+    connect(ui->Age, &QLineEdit::textChanged, this, &Form::onFieldsAreFilled);
+    connect(ui->Nick, &QLineEdit::textChanged, this, &Form::onFieldsAreFilled);
 }
 
 Form::~Form()
@@ -18,7 +20,7 @@ Form::~Form()
     delete ui;
 }
 
-void Form::on_pushButton_clicked()
+void Form::on_pbEnter_clicked()
 {
     Player newPlayer(ui->Age->text(), ui->Nick->text().toInt());
     dbmanager->inserIntoTable(newPlayer);
@@ -26,4 +28,15 @@ void Form::on_pushButton_clicked()
     DifficultyLevel difficultyLevel = ui->rbHard->isChecked() ? DifficultyLevel::HARD : DifficultyLevel::NORMAL;
     MainWindow* w = new MainWindow(difficultyLevel);
     w->show();
+}
+
+void Form::onFieldsAreFilled()
+{
+    if(!ui->Age->text().isEmpty() && !ui->Nick->text().isEmpty())
+    {
+        ui->pbEnter->show();
+    } else
+    {
+        ui->pbEnter->hide();
+    }
 }

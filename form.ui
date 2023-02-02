@@ -101,7 +101,10 @@ color:#717072;
      <string> LOGIN HERE</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pbEnter">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -243,7 +246,7 @@ border-radius: 30px;
  <tabstops>
   <tabstop>Age</tabstop>
   <tabstop>Nick</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>pbEnter</tabstop>
   <tabstop>toolButton</tabstop>
  </tabstops>
  <resources/>
